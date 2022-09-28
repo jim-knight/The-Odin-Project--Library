@@ -1,3 +1,5 @@
+const booksList = document.getElementById('books');
+
 let myLibrary = [
 	{
 		title: `The Hobbit`,
@@ -46,9 +48,21 @@ function Book(title, author, pages, haveRead) {
 // Displays books on the front end
 function displayLibrary() {
 	myLibrary.forEach((book) => {
-		return `
-		${book.title}, ${book.author}
+		const newCard = document.createElement('li');
+		newCard.classList.add('card', 'w-full', 'bg-base-100', 'shadow-md', 'text-base', 'font-normal', 'text-left');
+		newCard.innerHTML = `
+			<figure><img src="https://placeimg.com/400/225/arch" alt="Arch" /></figure>
+			<div class="card-body">
+				<h2 class="card-title">${book.title}</h2>
+				<p>${book.author}</p>
+				<div class="card-actions justify-start">
+					<div class="badge badge-accent badge-sm">${book.pages} pages</div>
+					${book.haveRead ? '<div class="badge badge-primary badge-sm">Read</div>' : '<div class="badge badge-secondary badge-sm">Not read</div>'}
+
+				</div>
+			</div>
 		`;
+		booksList.appendChild(newCard);
 	});
 }
 displayLibrary();
