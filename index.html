@@ -12,7 +12,8 @@
 	<body class="min-h-screen flex items-center justify-center bg-base-200">
 		<div class="container-lg w-full max-w-screen-lg p-10 mx-auto text-xl font-bold text-center">
 			<h1 class="mb-10">My Library</h1>
-			<button id="newBook" class="btn btn-primary btn-sm mb-8">Add a new book</button>
+			<a href="#modal-newBook" id="newBook" class="btn btn-primary btn-sm mb-8">Add a new book</a>
+
 			<ul id="books" class="grid grid-cols-3 gap-5">
 				<!-- <li class="card w-full bg-base-100 shadow-md text-base font-normal text-left">
 					<figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
@@ -26,6 +27,26 @@
 					</div>
 				</li> -->
 			</ul>
+		</div>
+
+		<div class="modal" id="modal-newBook">
+			<div class="modal-box">
+				<h3 class="font-bold text-lg text-center mb-2">Add a new book</h3>
+				<form>
+					<input type="text" placeholder="Title" class="input input-bordered w-full mb-2" />
+					<input type="text" placeholder="Author" class="input input-bordered w-full mb-2" />
+					<input type="text" placeholder="No. of pages" class="input input-bordered w-full mb-2" />
+					<div class="form-control">
+						<label class="label cursor-pointer">
+							<span class="label-text">Have you read this book?</span>
+							<input type="checkbox" class="toggle" />
+						</label>
+					</div>
+					<div class="modal-action">
+						<a href="#" class="btn">Submit</a>
+					</div>
+				</form>
+			</div>
 		</div>
 		<script src="./assets/js/script.js"></script>
 	</body>
