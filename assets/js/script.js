@@ -49,14 +49,14 @@ function Book(title, author, pages, haveRead) {
 function displayLibrary() {
 	myLibrary.forEach((book) => {
 		const newCard = document.createElement('li');
-		newCard.classList.add('card', 'w-full', 'bg-base-100', 'shadow-md', 'text-base', 'font-normal', 'text-left');
+		newCard.classList.add('card', 'w-full', 'bg-base-100', 'shadow-lg', 'text-base', 'font-normal', 'text-left');
 		newCard.innerHTML = `
-			<figure><img src="https://placeimg.com/400/225/arch" alt="Arch" /></figure>
+			
 			<div class="card-body">
 				<h2 class="card-title">${book.title}</h2>
 				<p>${book.author}</p>
 				<div class="card-actions justify-start">
-					<div class="badge badge-accent badge-sm">${book.pages} pages</div>
+					<div class="badge badge-neutral badge-sm">${book.pages} pages</div>
 					${book.haveRead ? '<div class="badge badge-primary badge-sm">Read</div>' : '<div class="badge badge-secondary badge-sm">Not read</div>'}
 
 				</div>
@@ -66,8 +66,3 @@ function displayLibrary() {
 	});
 }
 displayLibrary();
-
-const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, false);
-console.log(theHobbit.info()); // "The Hobbit by J.R.R. Tolkien, 295 pages, not read yet"
-console.log(myLibrary);
-addBookToLibrary('Test title', 'Some guy', 666);
