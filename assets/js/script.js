@@ -2,6 +2,8 @@ const booksList = document.getElementById('books');
 
 // Form
 const modalTrigger = document.getElementById('modal-newBook');
+const deleteTriggers = document.querySelectorAll('.bookDelete');
+
 const form = document.getElementById('form-newBook');
 const formTitle = document.getElementById('title');
 const formAuthor = document.getElementById('author');
@@ -42,10 +44,6 @@ let Book = function (title, author, pages, haveRead) {
 	this.author = author;
 	this.pages = pages;
 	this.haveRead = haveRead;
-
-	this.info = () => {
-		return `${this.title} by ${this.author}, ${this.pages} pages, ${this.haveRead ? 'have read' : 'not read yet'}.`;
-	};
 };
 
 // Add a new book to the library
@@ -57,12 +55,25 @@ let addBookToLibrary = function () {
 
 	const newBook = new Book(title, author, pages, readStatus);
 	myLibrary.push(newBook);
+
+	// Hide modal and reset the form
 	modalTrigger.checked = false;
 	form.reset();
+	refreshLibrary();
+};
+
+// Refresh library
+let refreshLibrary = function () {
 	booksList.innerHTML = '';
 	displayLibrary();
 };
-let deleteBook = function () {};
+
+// Delete book
+function deleteBook(e) {
+	curIndex = e.path[2].attributes['data-id'].value;
+	// console.log(e);
+	console.log('Current index:', curIndex);
+}
 
 // Clear form
 let clearForm = function () {
@@ -79,7 +90,7 @@ let displayLibrary = function () {
 		newCard.classList.add('card', 'w-full', 'bg-base-100', 'shadow-lg', 'text-base', 'font-normal', 'text-left');
 		newCard.innerHTML = `
 			<div class="card-body pt-10 pb-6">
-				<label for="book-delete" class="btn btn-xs btn-circle absolute right-2 top-2 hover:bg-primary">✕</label>
+				<label for="book-delete" class="btn btn-xs btn-circle absolute right-2 top-2 hover:bg-primary bookDelete">✕</label>
 				<h2 class="card-title">${book.title}</h2>
 				<p>${book.author}</p>
 
@@ -89,11 +100,19 @@ let displayLibrary = function () {
 				</button>
 			</div>
 		`;
+
+		const deleteBTN = newCard.querySelector('.bookDelete');
+		deleteBTN.addEventListener('click', () => {
+			myLibrary.splice(i, 1);
+			refreshLibrary();
+		});
+
 		newCard.dataset.id = i;
 		booksList.appendChild(newCard);
 	});
 };
-displayLibrary();
 
 // Event listeners
 formSubmit.addEventListener('click', addBookToLibrary);
+
+window.onload = displayLibrary();
