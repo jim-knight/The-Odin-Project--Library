@@ -37,7 +37,7 @@ let myLibrary = [
 ];
 
 // Book properties
-function Book(title, author, pages, haveRead) {
+let Book = function (title, author, pages, haveRead) {
 	this.title = title;
 	this.author = author;
 	this.pages = pages;
@@ -46,10 +46,10 @@ function Book(title, author, pages, haveRead) {
 	this.info = () => {
 		return `${this.title} by ${this.author}, ${this.pages} pages, ${this.haveRead ? 'have read' : 'not read yet'}.`;
 	};
-}
+};
 
 // Add a new book to the library
-function addBookToLibrary() {
+let addBookToLibrary = function () {
 	let title = formTitle.value;
 	let author = formAuthor.value;
 	let pages = formPages.value;
@@ -61,28 +61,29 @@ function addBookToLibrary() {
 	form.reset();
 	booksList.innerHTML = '';
 	displayLibrary();
-}
+};
+let deleteBook = function () {};
 
 // Clear form
-function clearForm() {
+let clearForm = function () {
 	formTitle.value = '';
 	formAuthor.value = '';
 	formPages.value = '';
 	formReadStatus.checked ? (formReadStatus.value = '') : (formReadStatus.value = '');
-}
+};
 
 // Displays books on the front end
-function displayLibrary() {
+let displayLibrary = function () {
 	myLibrary.forEach((book, i) => {
 		const newCard = document.createElement('li');
 		newCard.classList.add('card', 'w-full', 'bg-base-100', 'shadow-lg', 'text-base', 'font-normal', 'text-left');
 		newCard.innerHTML = `
-			<div class="card-body">
+			<div class="card-body pt-10 pb-6">
 				<label for="book-delete" class="btn btn-xs btn-circle absolute right-2 top-2 hover:bg-primary">✕</label>
 				<h2 class="card-title">${book.title}</h2>
 				<p>${book.author}</p>
 
-				<button class="btn gap-2 justify-start cursor-default">
+				<button class="btn gap-2 justify-start cursor-default mt-4 no-animation">
 				${book.pages} pages
 				${book.haveRead ? '<div class="badge badge-primary badge-md cursor-pointer">Read</div>' : '<div class="badge badge-secondary badge-md cursor-pointer">Not read</div>'}
 				</button>
@@ -91,7 +92,7 @@ function displayLibrary() {
 		newCard.dataset.id = i;
 		booksList.appendChild(newCard);
 	});
-}
+};
 displayLibrary();
 
 // Event listeners
