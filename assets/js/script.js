@@ -83,6 +83,11 @@ let clearForm = function () {
 	formReadStatus.checked ? (formReadStatus.value = '') : (formReadStatus.value = '');
 };
 
+// Change read status
+let changeReadStatus = function (Book) {
+	console.log(Book.haveRead);
+};
+
 // Displays books on the front end
 let displayLibrary = function () {
 	myLibrary.forEach((book, i) => {
@@ -96,7 +101,7 @@ let displayLibrary = function () {
 
 				<button class="btn gap-2 justify-start cursor-default mt-4 no-animation">
 				${book.pages} pages
-				${book.haveRead ? '<div class="badge badge-primary badge-md cursor-pointer">Read</div>' : '<div class="badge badge-secondary badge-md cursor-pointer">Not read</div>'}
+				${book.haveRead ? '<div class="badge badge-primary badge-md cursor-pointer readStatus">Read</div>' : '<div class="badge badge-secondary badge-md cursor-pointer readStatus">Not read</div>'}
 				</button>
 			</div>
 		`;
@@ -105,6 +110,22 @@ let displayLibrary = function () {
 		deleteBTN.addEventListener('click', () => {
 			myLibrary.splice(i, 1);
 			refreshLibrary();
+		});
+
+		let readStatus = myLibrary[i].haveRead;
+		const readBTN = newCard.querySelector('.readStatus');
+		readBTN.addEventListener('click', () => {
+			if (readStatus) {
+				readStatus = false;
+				readBTN.classList.remove('badge-primary');
+				readBTN.classList.add('badge-secondary');
+				readBTN.textContent = 'Not read';
+			} else {
+				readStatus = true;
+				readBTN.classList.add('badge-primary');
+				readBTN.classList.remove('badge-secondary');
+				readBTN.textContent = 'Read';
+			}
 		});
 
 		newCard.dataset.id = i;
