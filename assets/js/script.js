@@ -38,13 +38,19 @@ let myLibrary = [
 	},
 ];
 
-// Book properties
-let Book = function (title, author, pages, haveRead) {
-	this.title = title;
-	this.author = author;
-	this.pages = pages;
-	this.haveRead = haveRead;
-};
+class Book {
+	constructor(
+		title = 'Unknown',
+		author = 'Unknown',
+		pages = 0,
+		haveRead = false
+	) {
+		this.title = title;
+		this.author = author;
+		this.pages = pages;
+		this.haveRead = haveRead;
+	}
+}
 
 // Add a new book to the library
 let addBookToLibrary = function () {
@@ -80,7 +86,9 @@ let clearForm = function () {
 	formTitle.value = '';
 	formAuthor.value = '';
 	formPages.value = '';
-	formReadStatus.checked ? (formReadStatus.value = '') : (formReadStatus.value = '');
+	formReadStatus.checked
+		? (formReadStatus.value = '')
+		: (formReadStatus.value = '');
 };
 
 // Change read status
@@ -92,7 +100,15 @@ let changeReadStatus = function (Book) {
 let displayLibrary = function () {
 	myLibrary.forEach((book, i) => {
 		const newCard = document.createElement('li');
-		newCard.classList.add('card', 'w-full', 'bg-base-100', 'shadow-lg', 'text-base', 'font-normal', 'text-left');
+		newCard.classList.add(
+			'card',
+			'w-full',
+			'bg-base-100',
+			'shadow-lg',
+			'text-base',
+			'font-normal',
+			'text-left'
+		);
 		newCard.innerHTML = `
 			<div class="card-body pt-10 pb-6">
 				<label for="book-delete" class="btn btn-xs btn-circle absolute right-2 top-2 hover:bg-primary bookDelete">✕</label>
@@ -101,7 +117,11 @@ let displayLibrary = function () {
 
 				<button class="btn gap-2 justify-start cursor-default mt-4 no-animation">
 				${book.pages} pages
-				${book.haveRead ? '<div class="badge badge-primary badge-md cursor-pointer readStatus">Read</div>' : '<div class="badge badge-secondary badge-md cursor-pointer readStatus">Not read</div>'}
+				${
+					book.haveRead
+						? '<div class="badge badge-primary badge-md cursor-pointer readStatus">Read</div>'
+						: '<div class="badge badge-secondary badge-md cursor-pointer readStatus">Not read</div>'
+				}
 				</button>
 			</div>
 		`;
