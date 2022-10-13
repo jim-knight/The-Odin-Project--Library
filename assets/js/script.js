@@ -11,37 +11,6 @@ const formPages = document.getElementById('pages');
 const formReadStatus = document.getElementById('readStatus');
 const formSubmit = document.getElementById('addBook');
 
-// Conversions to classes
-
-// Book properties
-// let Book = function (title, author, pages, haveRead) {
-// 	this.title = title;
-// 	this.author = author;
-// 	this.pages = pages;
-// 	this.haveRead = haveRead;
-// };
-class Book {
-	constructor(
-		title = 'Unknown',
-		author = 'Unknown',
-		pages = 0,
-		haveRead = false
-	) {
-		this.title = title;
-		this.author = author;
-		this.pages = pages;
-		this.haveRead = haveRead;
-	}
-}
-
-class MyLibrary {
-	constructor() {
-		this.books = [];
-	}
-
-	getBook(title) {}
-}
-
 let myLibrary = [
 	{
 		title: `The Hobbit`,
@@ -69,39 +38,35 @@ let myLibrary = [
 	},
 ];
 
-// Add a new book to the library
-// let addBookToLibrary = function () {
-// 	let title = formTitle.value;
-// 	let author = formAuthor.value;
-// 	let pages = formPages.value;
-// 	let readStatus = formReadStatus.checked ? true : false;
-
-// 	const newBook = new Book(title, author, pages, readStatus);
-// 	myLibrary.push(newBook);
-
-// 	// Hide modal and reset the form
-// 	modalTrigger.checked = false;
-// 	form.reset();
-// 	refreshLibrary();
-// };
-
-class AddBookToLibrary {
-	constructor() {
-		this.title = formTitle.value;
-		this.author = formAuthor.value;
-		this.pages = formPages.value;
-		this.readStatus = formReadStatus.checked ? true : false;
-		this.newBook = new Book(title, author, pages, readStatus);
-	}
-
-	addBookAndRefresh() {
-		// Hide modal and reset the form
-		modalTrigger.checked = false;
-		form.reset();
-		refreshLibrary();
-		myLibrary.push(newBook);
+class Book {
+	constructor(
+		title = 'Unknown',
+		author = 'Unknown',
+		pages = 0,
+		haveRead = false
+	) {
+		this.title = title;
+		this.author = author;
+		this.pages = pages;
+		this.haveRead = haveRead;
 	}
 }
+
+// Add a new book to the library
+let addBookToLibrary = function () {
+	let title = formTitle.value;
+	let author = formAuthor.value;
+	let pages = formPages.value;
+	let readStatus = formReadStatus.checked ? true : false;
+
+	const newBook = new Book(title, author, pages, readStatus);
+	myLibrary.push(newBook);
+
+	// Hide modal and reset the form
+	modalTrigger.checked = false;
+	form.reset();
+	refreshLibrary();
+};
 
 // Refresh library
 let refreshLibrary = function () {
@@ -189,6 +154,6 @@ let displayLibrary = function () {
 };
 
 // Event listeners
-formSubmit.addEventListener('click', AddBookToLibrary.addBookAndRefresh);
+formSubmit.addEventListener('click', addBookToLibrary);
 
 window.onload = displayLibrary();
