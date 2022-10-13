@@ -11,6 +11,37 @@ const formPages = document.getElementById('pages');
 const formReadStatus = document.getElementById('readStatus');
 const formSubmit = document.getElementById('addBook');
 
+// Conversions to classes
+
+// Book properties
+// let Book = function (title, author, pages, haveRead) {
+// 	this.title = title;
+// 	this.author = author;
+// 	this.pages = pages;
+// 	this.haveRead = haveRead;
+// };
+class Book {
+	constructor(
+		title = 'Unknown',
+		author = 'Unknown',
+		pages = 0,
+		haveRead = false
+	) {
+		this.title = title;
+		this.author = author;
+		this.pages = pages;
+		this.haveRead = haveRead;
+	}
+}
+
+class MyLibrary {
+	constructor() {
+		this.books = [];
+	}
+
+	getBook(title) {}
+}
+
 let myLibrary = [
 	{
 		title: `The Hobbit`,
@@ -38,29 +69,39 @@ let myLibrary = [
 	},
 ];
 
-// Book properties
-let Book = function (title, author, pages, haveRead) {
-	this.title = title;
-	this.author = author;
-	this.pages = pages;
-	this.haveRead = haveRead;
-};
-
 // Add a new book to the library
-let addBookToLibrary = function () {
-	let title = formTitle.value;
-	let author = formAuthor.value;
-	let pages = formPages.value;
-	let readStatus = formReadStatus.checked ? true : false;
+// let addBookToLibrary = function () {
+// 	let title = formTitle.value;
+// 	let author = formAuthor.value;
+// 	let pages = formPages.value;
+// 	let readStatus = formReadStatus.checked ? true : false;
 
-	const newBook = new Book(title, author, pages, readStatus);
-	myLibrary.push(newBook);
+// 	const newBook = new Book(title, author, pages, readStatus);
+// 	myLibrary.push(newBook);
 
-	// Hide modal and reset the form
-	modalTrigger.checked = false;
-	form.reset();
-	refreshLibrary();
-};
+// 	// Hide modal and reset the form
+// 	modalTrigger.checked = false;
+// 	form.reset();
+// 	refreshLibrary();
+// };
+
+class AddBookToLibrary {
+	constructor() {
+		this.title = formTitle.value;
+		this.author = formAuthor.value;
+		this.pages = formPages.value;
+		this.readStatus = formReadStatus.checked ? true : false;
+		this.newBook = new Book(title, author, pages, readStatus);
+	}
+
+	addBookAndRefresh() {
+		// Hide modal and reset the form
+		modalTrigger.checked = false;
+		form.reset();
+		refreshLibrary();
+		myLibrary.push(newBook);
+	}
+}
 
 // Refresh library
 let refreshLibrary = function () {
@@ -80,7 +121,9 @@ let clearForm = function () {
 	formTitle.value = '';
 	formAuthor.value = '';
 	formPages.value = '';
-	formReadStatus.checked ? (formReadStatus.value = '') : (formReadStatus.value = '');
+	formReadStatus.checked
+		? (formReadStatus.value = '')
+		: (formReadStatus.value = '');
 };
 
 // Change read status
@@ -92,7 +135,15 @@ let changeReadStatus = function (Book) {
 let displayLibrary = function () {
 	myLibrary.forEach((book, i) => {
 		const newCard = document.createElement('li');
-		newCard.classList.add('card', 'w-full', 'bg-base-100', 'shadow-lg', 'text-base', 'font-normal', 'text-left');
+		newCard.classList.add(
+			'card',
+			'w-full',
+			'bg-base-100',
+			'shadow-lg',
+			'text-base',
+			'font-normal',
+			'text-left'
+		);
 		newCard.innerHTML = `
 			<div class="card-body pt-10 pb-6">
 				<label for="book-delete" class="btn btn-xs btn-circle absolute right-2 top-2 hover:bg-primary bookDelete">✕</label>
@@ -101,7 +152,11 @@ let displayLibrary = function () {
 
 				<button class="btn gap-2 justify-start cursor-default mt-4 no-animation">
 				${book.pages} pages
-				${book.haveRead ? '<div class="badge badge-primary badge-md cursor-pointer readStatus">Read</div>' : '<div class="badge badge-secondary badge-md cursor-pointer readStatus">Not read</div>'}
+				${
+					book.haveRead
+						? '<div class="badge badge-primary badge-md cursor-pointer readStatus">Read</div>'
+						: '<div class="badge badge-secondary badge-md cursor-pointer readStatus">Not read</div>'
+				}
 				</button>
 			</div>
 		`;
@@ -134,6 +189,6 @@ let displayLibrary = function () {
 };
 
 // Event listeners
-formSubmit.addEventListener('click', addBookToLibrary);
+formSubmit.addEventListener('click', AddBookToLibrary.addBookAndRefresh);
 
 window.onload = displayLibrary();
